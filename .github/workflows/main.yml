@@ -1,0 +1,17 @@
+name: 定时调用 Dify API
+on:
+  schedule:
+    # 定时规则：使用 cron 表达式，时区为 UTC
+    # 示例：每天北京时间 9 点执行（UTC 时间为 1 点，北京时间 = UTC + 8）
+    - cron: '0 1 * * *'  # 格式：分 时 日 月 周
+
+jobs:
+  call-dify-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 发送请求到 Dify
+        run: |
+          curl -X POST "https://api.dify.ai/v1/workflows/run" \
+            -H "Authorization: Bearer ${{ secrets.DIFY_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"inputs": {}}'
