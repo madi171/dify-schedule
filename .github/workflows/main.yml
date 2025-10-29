@@ -11,7 +11,11 @@ jobs:
     steps:
       - name: 发送请求到 Dify
         run: |
-          curl -X POST "https://api.dify.ai/v1/workflows/run" \
-            -H "Authorization: Bearer ${{ secrets.DIFY_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            -d '{"inputs": {}}'
+          curl -X POST 'https://api.dify.ai/v1/workflows/run' \
+                --header 'Authorization: Bearer ${{ secrets.DIFY_API_KEY }}' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                  "inputs": {},
+                  "response_mode": "streaming",
+                  "user": "Dify"
+                }'
